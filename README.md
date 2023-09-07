@@ -52,7 +52,7 @@ source .devops/bin/activate
 * Run `make lint` to lint your source code
 
 ### Deploying and running in Docker
-* Build docker image + run container (application) locally `./run_docker.sh``
+* Build docker image + run container (application) locally `./run_docker.sh`
 * Run predictions: from another terminal call `./make_prediction.sh`
 * `CTRL+C` to terminate the Flask app running in a docker container
 
