@@ -48,7 +48,19 @@ python3 -m pip install --user virtualenv
 python3 -m virtualenv --python=<path-to-Python3.7> .devops
 source .devops/bin/activate
 ```
-* Run `make install` to install the necessary dependencies
+
+Install hadolint using the instructions for your OS here: https://github.com/hadolint/hadolint
+For MacOS:
+```
+brew install hadolint
+```
+For Linux:
+```
+wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
+chmod +x /bin/hadolint
+```
+
+* Run `make install` to install the necessary Python dependencies
 * Run `make lint` to lint your source code
 
 ### Deploying and running in Docker
