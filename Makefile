@@ -14,7 +14,7 @@ install:
 	# This should be run from inside a virtualenv
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
-	brew install hadolint
+	echo "This will not install hadolint which is also required. Install as per the instructions for your OS here: https://github.com/hadolint/hadolint"
 
 test:
 	# Additional, optional, tests could go here
