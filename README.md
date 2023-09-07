@@ -1,4 +1,4 @@
-[![<ORG_NAME>](https://circleci.com/gh/bugedone/project-ml-microservice-kubernetes.svg?style=svg)](<LINK>)
+[![<ORG_NAME>](https://circleci.com/gh/bugedone/project-ml-microservice-kubernetes.svg?style=svg)](https://app.circleci.com/pipelines/github/bugedone/project-ml-microservice-kubernetes)
 
 
 ## Project Overview
@@ -18,14 +18,27 @@ Your project goal is to operationalize this working, machine learning microservi
 * Deploy a container using Kubernetes and make a prediction
 * Upload a complete Github repo with CircleCI to indicate that your code has been tested
 
-You can find a detailed [project rubric, here](https://review.udacity.com/#!/rubrics/2576/view).
-
-**The final implementation of the project will showcase your abilities to operationalize production microservices.**
+---
+## Project Files Overview
+`.circleci` CircleCI directory for the configuration files
+  `config.yml` YAML configuration file with parameters and workflows for building/testing
+`model_data` Contains the model data for the Flask app
+`docker_out.txt` Log statements from running in Docker
+`kubernetes_out.txt` Log statements from running in Kubernetes
+`Dockerfile` Docker template
+`Makefile` Project makefile
+`README.md` Summary of the project and execution
+`app.py` Flask app main source file
+`make_predictions.sh` Sends input data to the flask app
+`requirements.txt` Python app required dependencies and package versions
+`run_docker.sh` Builds a Docker image and runs the container
+`run_kubernetes.sh` Downloads Docker image, deploys the pod, and forwards the port
+`upload_docker.sh` Publishes the built Docker image to DockerHub
 
 ---
-
 ## Setup the Environment
 
+### Python virtual environment
 * Create a virtualenv with Python 3.7 and activate it. Refer to this link for help on specifying the Python version in the virtualenv. 
 ```bash
 python3 -m pip install --user virtualenv
@@ -36,16 +49,20 @@ python3 -m virtualenv --python=<path-to-Python3.7> .devops
 source .devops/bin/activate
 ```
 * Run `make install` to install the necessary dependencies
+* Run `make lint` to lint your source code
 
-### Running `app.py`
+### Deploying and running in Docker
+* Build docker image + run container (application) locally `./run_docker.sh``
+* Run predictions: from another terminal call `./make_prediction.sh`
+* `CTRL+C` to terminate the Flask app running in a docker container
 
-1. Standalone:  `python app.py`
-2. Run in Docker:  `./run_docker.sh`
-3. Run in Kubernetes:  `./run_kubernetes.sh`
-
-### Kubernetes Steps
-
-* Setup and Configure Docker locally
-* Setup and Configure Kubernetes locally
-* Create Flask app in Container
-* Run via kubectl
+### Deploying and running in Kubernetes
+* Build the docker image as above (`run_docker.sh`)
+* Publish the docker image using `./upload_docker.sh`
+* Start a local cluster with `minikube start`
+* Verify cluster configurations `kubectl config view` - look for an entry with `certificate authority` and `server` populated
+* Run the image in Kubernetes `./run_kubernetes.sh`. This may not be able to forward the port initially which the pod is started. If so wait a few minutes and try again
+* Run predictions: from another terminal call `./make_prediction.sh`
+* `CTRL+C` to terminate the port forwarding
+* To pause the Kubernetes cluster use `minikube stop`
+* To terminate the pod and Kubernetes cluster use `minikube delete`

@@ -14,6 +14,7 @@ install:
 	# This should be run from inside a virtualenv
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
+	brew install hadolint
 
 test:
 	# Additional, optional, tests could go here
